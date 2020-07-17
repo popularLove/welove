@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.popular.welove.mapper.TaobaoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.popular.welove.entity.Taobao">
+        <id column="id" property="id" />
+        <result column="level" property="level" />
+        <result column="parent_id" property="parentId" />
+        <result column="zh" property="zh" />
+        <result column="ru" property="ru" />
+        <result column="pt" property="pt" />
+        <result column="en" property="en" />
+        <result column="sort" property="sort" />
+        <result column="catid" property="catid" />
+        <result column="catid_use" property="catidUse" />
+        <result column="query" property="query" />
+        <result column="query_use" property="queryUse" />
+        <result column="weight" property="weight" />
+        <result column="status" property="status" />
+    </resultMap>
+
+</mapper>
