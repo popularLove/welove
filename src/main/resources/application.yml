@@ -1,56 +1,81 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
-    name: welove-service #·şÎñÃû³Æ
+    name: welove-service #æœåŠ¡åç§°
 
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
-
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    #è®¾ç½®ç©ºå¦‚ä½•åºåˆ—åŒ–
+    defaultPropertyInclusion: ALWAYS
+      ##æ–‡ä»¶ä¸Šä¼ å¤§å°
+  servlet:
+    multipart:
+      #å•ä¸ªæ–‡ä»¶å¤§å°
+      maxFileSize: 5MB
+      #å•æ¬¡è¯·æ±‚å¤§å°
+      maxRequestSize: 45MB
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource  #µ±Ç°Êı¾İÔ´²Ù×÷ÀàĞÍ
+    type: com.alibaba.druid.pool.DruidDataSource  #å½“å‰æ•°æ®æºæ“ä½œç±»å‹
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/popular?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
     username: root
     password: admin
     druid:
-      # Á¬½Ó³ØµÄÅäÖÃĞÅÏ¢
-      # ³õÊ¼»¯´óĞ¡£¬×îĞ¡£¬×î´ó
+      # è¿æ¥æ± çš„é…ç½®ä¿¡æ¯
+      # åˆå§‹åŒ–å¤§å°ï¼Œæœ€å°ï¼Œæœ€å¤§
       initial-size: 5
       min-idle: 5
       maxActive: 10
-      # ÅäÖÃ»ñÈ¡Á¬½ÓµÈ´ı³¬Ê±µÄÊ±¼ä
+      # é…ç½®è·å–è¿æ¥ç­‰å¾…è¶…æ—¶çš„æ—¶é—´
       maxWait: 10000
-      # ÅäÖÃ¼ä¸ô¶à¾Ã²Å½øĞĞÒ»´Î¼ì²â£¬¼ì²âĞèÒª¹Ø±ÕµÄ¿ÕÏĞÁ¬½Ó£¬µ¥Î»ÊÇºÁÃë
+      # é…ç½®é—´éš”å¤šä¹…æ‰è¿›è¡Œä¸€æ¬¡æ£€æµ‹ï¼Œæ£€æµ‹éœ€è¦å…³é—­çš„ç©ºé—²è¿æ¥ï¼Œå•ä½æ˜¯æ¯«ç§’
       timeBetweenEvictionRunsMillis: 600000
-      # ÅäÖÃÒ»¸öÁ¬½ÓÔÚ³ØÖĞ×îĞ¡Éú´æµÄÊ±¼ä£¬µ¥Î»ÊÇºÁÃë
+      # é…ç½®ä¸€ä¸ªè¿æ¥åœ¨æ± ä¸­æœ€å°ç”Ÿå­˜çš„æ—¶é—´ï¼Œå•ä½æ˜¯æ¯«ç§’
       minEvictableIdleTimeMillis: 300000
       validationQuery: SELECT 1
       testWhileIdle: true
       testOnBorrow: false
       testOnReturn: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+
+  logging:
+    pattern:
+      console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%t]){faint} %clr(%-40.40logger{39}){cyan}[lineno:%line]    %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+    level:
+      io.swagger.models.parameters.AbstractSerializableParameter: ${LOG_LEVEL:debug}
+      com.popular: info
 
 
-# mybatisÏà¹ØÅäÖÃ
+
+# mybatisç›¸å…³é…ç½®
 mybatis-plus:
   configuration:
     use-generated-keys: true
     map-underscore-to-camel-case: true
     use-column-label: true
-    ###############Õâ¸öÅäÖÃ½áºÏÉÏÃæspringÒ»¸öÅäÖÃ½â¾ömybatis×Ö¶Î·µ»ØmapµÄÊ±ºòµ±½á¹ûÎªnullµÄÊ±ºòÒª·µ»Ø×Ö¶Î
+    ###############è¿™ä¸ªé…ç½®ç»“åˆä¸Šé¢springä¸€ä¸ªé…ç½®è§£å†³mybatiså­—æ®µè¿”å›mapçš„æ—¶å€™å½“ç»“æœä¸ºnullçš„æ—¶å€™è¦è¿”å›å­—æ®µ
     call-setters-on-nulls: true
   mapper-locations: classpath:mapper/**/*.xml
 
-#pagehelper·ÖÒ³²å¼şÅäÖÃ
+#pagehelperåˆ†é¡µæ’ä»¶é…ç½®
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
 
-#Éú²ú»·¾³¹Ø±Õswagger
+#ç”Ÿäº§ç¯å¢ƒå…³é—­swagger
 swagger:
   enabled: true

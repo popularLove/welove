@@ -4,6 +4,7 @@ package com.popular.welove.controller;
 import com.popular.welove.common.ObjectRestResponse;
 import com.popular.welove.common.RspUtils;
 import com.popular.welove.entity.Taobao;
+import com.popular.welove.redis.RedisUtil;
 import com.popular.welove.service.TaobaoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +32,13 @@ public class TaobaoController {
 
     @Resource
     private TaobaoService taobaoService;
+    @Resource
+    private RedisUtil redisUtil;
 
     @GetMapping("/{id}")
     @ApiOperation(value ="查询详情", notes = "查询详情")
     public ObjectRestResponse<Taobao> get(@ApiParam(name = "id", value = "ID", required = true) @PathVariable Integer id){
+        redisUtil.set("log","查詢日誌");
         return RspUtils.success(taobaoService.selectById(id));
     }
 

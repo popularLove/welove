@@ -64,6 +64,7 @@ public class User extends Model<User> {
      */
     private Date createTime;
 
+    private String token;
 
     @Override
     protected Serializable pkVal() {
