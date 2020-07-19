@@ -7,9 +7,7 @@ import net.sf.json.processors.DefaultDefaultValueProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * AJAX请求后的数据返回对象 Created by HarsenLin on 2015/5/6.
- */
+
 public class AjaxStatus extends HashMap<String, Object> implements Map<String, Object> {
 	private static final long serialVersionUID = -4266740045263457771L;
 	/** 执行状态：表示执行操作的方法是否有异常【是false，否true】。 */
