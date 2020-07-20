@@ -1,6 +1,8 @@
 package com.popular.welove.controller;
 
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.popular.welove.annotation.AuthIgnore;
 import com.popular.welove.common.ObjectRestResponse;
 import com.popular.welove.common.RspUtils;
 import com.popular.welove.entity.Taobao;
@@ -35,6 +37,16 @@ public class TaobaoController {
     @Resource
     private RedisUtil redisUtil;
 
+    @NacosValue(value = "${liuxing:this is a default value}", autoRefreshed = true)
+    private String test;
+
+    @AuthIgnore
+    @GetMapping("/get")
+    public String get() {
+        return test;
+    }
+
+    @AuthIgnore
     @GetMapping("/{id}")
     @ApiOperation(value ="查询详情", notes = "查询详情")
     public ObjectRestResponse<Taobao> get(@ApiParam(name = "id", value = "ID", required = true) @PathVariable Integer id){

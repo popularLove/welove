@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
@@ -57,8 +57,9 @@ spring:
       io.swagger.models.parameters.AbstractSerializableParameter: ${LOG_LEVEL:debug}
       com.popular: info
 
-
-
+nacos:
+  config:
+    server-addr: ${NACOS_ADDR:192.168.1.145:8848}
 # mybatis相关配置
 mybatis-plus:
   configuration:
